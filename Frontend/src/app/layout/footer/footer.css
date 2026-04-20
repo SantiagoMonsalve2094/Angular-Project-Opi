@@ -1,0 +1,14 @@
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  padding: 10px 14px;
+  background: var(--opi-dark);
+  color: #ffffff;
+  border-top: 4px solid var(--opi-orange);
+  font-size: 0.9rem;
+}
+
+.footer p {
+  margin: 0;
+}

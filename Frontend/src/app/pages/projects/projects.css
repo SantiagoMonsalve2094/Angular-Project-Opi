@@ -1,0 +1,19 @@
+.page-card {
+  max-width: 430px;
+  padding: 12px;
+  border: 3px dashed var(--opi-magenta);
+  background: #f6e6f0;
+}
+
+.page-card h2 {
+  margin: 0 0 8px;
+}
+
+.page-card p {
+  margin: 0 0 8px;
+}
+
+.page-card a {
+  color: var(--opi-dark);
+  word-break: break-word;
+}

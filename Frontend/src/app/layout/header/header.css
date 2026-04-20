@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: linear-gradient(90deg, var(--opi-orange), var(--opi-magenta));
+  border-bottom: 4px solid var(--opi-dark);
+}
+
+.logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  background: #ffffff;
+  border: 2px solid var(--opi-dark);
+  padding: 4px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #ffffff;
+  text-transform: uppercase;
+}

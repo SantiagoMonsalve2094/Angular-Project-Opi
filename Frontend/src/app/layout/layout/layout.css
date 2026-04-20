@@ -1,0 +1,29 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.main-content {
+  flex: 1;
+  padding: 12px;
+  border-left: 4px solid var(--opi-dark);
+  background: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .main-content {
+    border-left: 0;
+    border-top: 4px solid var(--opi-dark);
+  }
+}

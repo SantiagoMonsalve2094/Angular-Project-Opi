@@ -1,0 +1,55 @@
+<div class="expense-page">
+
+  <div class="page-header">
+    <h2>Mis Gastos</h2>
+    <button class="btn-add" (click)="openModal()">Nuevo Gasto</button>
+  </div>
+
+
+  <div class="total-card">
+    <span>Total: $ {{ ((total | async) ?? 0) | number : '1.2-2' }}</span>
+  </div>
+
+
+  <div class="table-card">
+    <table class="expense-table">
+      <thead>
+        <tr>
+          <th>Descripcion</th>
+          <th>Monto</th>
+          <th>Fecha</th>
+          <th>Categoria</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- OPCION 1 - Signal:      *ngFor="let expense of expensesList()" -->
+        <!-- OPCION 2 - async pipe:  *ngFor="let expense of expensesList | async" -->
+        <tr *ngFor="let expense of expensesList | async">
+          <td class="cell-description">{{ expense.description }}</td>
+          <td class="cell-amount">$ {{ expense.amount | number : '1.2-2' }}</td>
+          <td class="cell-date">{{ expense.date | date : 'dd/MM/yyyy' }}</td>
+          <td class="cell-category">
+            <span class="category-badge" [ngClass]="getCategoryClass(expense.category)">
+              {{ getCategoryName(expense.category) }}
+            </span>
+          </td>
+          <td class="cell-actions">
+            <button class="btn-edit" (click)="editExpense(expense)">Editar</button>
+            <button class="btn-delete" (click)="deleteExpense(expense.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<app-expense-add
+  *ngIf="showModal()"
+  (expenseAdded)="onExpenseAdded($event)"
+  (closed)="showModal.set(false)"
+  [message]="modalMessage()"
+  [editingExpense]="selectedExpense()"
+></app-expense-add>

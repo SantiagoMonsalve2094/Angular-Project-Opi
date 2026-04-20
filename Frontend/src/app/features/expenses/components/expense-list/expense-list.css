@@ -1,0 +1,102 @@
+.expense-page {
+  display: grid;
+  gap: 12px;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.page-header h2 {
+  margin: 0;
+}
+
+.total-card {
+  border: 2px solid var(--opi-dark);
+  background: #fdf2e7;
+  padding: 8px 10px;
+  font-weight: 700;
+}
+
+.btn-add {
+  border: 2px solid var(--opi-dark);
+  background: var(--opi-orange);
+  padding: 8px 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.table-card {
+  border: 3px solid var(--opi-dark);
+  background: #ffffff;
+  padding: 10px;
+}
+
+.expense-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.expense-table th,
+.expense-table td {
+  border: 1px solid #b9b9b9;
+  padding: 8px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.expense-table th {
+  background: #f2f2f2;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid #555;
+  font-weight: 700;
+}
+
+.cat-housing {
+  background: #dbebff;
+}
+
+.cat-food {
+  background: #ffeac7;
+}
+
+.cat-entertainment {
+  background: #f3ddff;
+}
+
+.cat-health {
+  background: #d8f5df;
+}
+
+.cat-transport {
+  background: #ffe1e1;
+}
+
+.cat-others {
+  background: #e8e8e8;
+}
+
+.cell-actions {
+  white-space: nowrap;
+}
+
+.btn-edit,
+.btn-delete {
+  border: 2px solid var(--opi-dark);
+  background: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 8px;
+  margin-right: 6px;
+}
+
+.btn-delete {
+  background: #ffd6d6;
+}
