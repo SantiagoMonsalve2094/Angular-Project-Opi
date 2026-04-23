@@ -1,0 +1,18 @@
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: angular-opi-backend
+    ports:
+      - "5127:5127"
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: angular-opi-frontend
+    depends_on:
+      - backend
+    ports:
+      - "4200:4200"
