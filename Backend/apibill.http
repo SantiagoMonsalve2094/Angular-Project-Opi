@@ -1,6 +1,0 @@
-@apibill_HostAddress = http://localhost:5127
-
-GET {{apibill_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

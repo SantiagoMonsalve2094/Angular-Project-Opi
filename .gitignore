@@ -1,0 +1,38 @@
+*.log
+
+# Backend
+Backend/bin/
+Backend/obj/
+Backend/.vs/
+Backend/*.user
+Backend/*.suo
+Backend/.vscode/
+
+# Frontend
+Frontend/dist/
+Frontend/tmp/
+Frontend/out-tsc/
+Frontend/bazel-out/
+Frontend/node_modules/
+Frontend/npm-debug.log
+Frontend/yarn-error.log
+Frontend/.angular/cache/
+Frontend/.sass-cache/
+Frontend/connect.lock
+Frontend/coverage/
+Frontend/libpeerconnection.log
+Frontend/testem.log
+Frontend/typings/
+Frontend/__screenshots__/
+Frontend/.idea/
+Frontend/.project
+Frontend/.classpath
+Frontend/.c9/
+Frontend/*.launch
+Frontend/.settings/
+Frontend/*.sublime-workspace
+Frontend/.history/
+
+# System files
+.DS_Store
+Thumbs.db
