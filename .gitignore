@@ -1,37 +1,45 @@
+# Logs
 *.log
+npm-debug.log
+yarn-error.log
+testem.log
+libpeerconnection.log
 
-# Backend
-Backend/bin/
-Backend/obj/
-Backend/.vs/
-Backend/*.user
-Backend/*.suo
-Backend/.vscode/
+# Build output
+**/bin/
+**/obj/
+**/dist/
+**/tmp/
+**/out-tsc/
+**/bazel-out/
+**/coverage/
 
-# Frontend
-Frontend/dist/
-Frontend/tmp/
-Frontend/out-tsc/
-Frontend/bazel-out/
-Frontend/node_modules/
-Frontend/npm-debug.log
-Frontend/yarn-error.log
-Frontend/.angular/cache/
-Frontend/.sass-cache/
-Frontend/connect.lock
-Frontend/coverage/
-Frontend/libpeerconnection.log
-Frontend/testem.log
-Frontend/typings/
-Frontend/__screenshots__/
-Frontend/.idea/
-Frontend/.project
-Frontend/.classpath
-Frontend/.c9/
-Frontend/*.launch
-Frontend/.settings/
-Frontend/*.sublime-workspace
-Frontend/.history/
+# Dependencies and Angular cache
+**/node_modules/
+**/.angular/
+**/.sass-cache/
+**/typings/
+
+# IDE and local editor files
+**/.vs/
+**/.vscode/
+**/.idea/
+**/.history/
+**/.settings/
+*.user
+*.suo
+*.launch
+*.sublime-workspace
+.project
+.classpath
+.c9/
+
+# Docker/local generated files
+*.pid
+*.tmp
+.env
+.env.local
+docker-data/
 
 # System files
 .DS_Store
