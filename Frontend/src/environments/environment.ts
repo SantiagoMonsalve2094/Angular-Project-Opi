@@ -6,5 +6,6 @@ export const environment = {
     expensesAdd: '/expenses/add',
     expensesUpdate: (id: number) => `/expenses/update/${id}`,
     expensesDelete: (id: number) => `/expenses/delete/${id}`,
+    login: '/auth/login',
   },
 };

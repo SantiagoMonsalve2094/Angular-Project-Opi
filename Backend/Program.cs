@@ -66,6 +66,14 @@ app.MapDelete("/expenses/delete/{id}", (int id) =>
     }
     return Results.NotFound();
 }).WithName("DeleteExpense");
+
+app.MapPost("/auth/login", (LoginDto loginDto) =>
+{
+    return loginDto.username == "admin" && loginDto.password == "123456"
+        ? Results.Ok("Login successful")
+        : Results.Unauthorized();
+}).WithName("Login");
+
 app.Run();
 
 public class Expense
@@ -85,4 +93,10 @@ public enum ExpenseCategory
     Utilities,
     Healthcare,
     Other
+}
+
+public class LoginDto
+{
+    public string username { get; set; }
+    public string password { get; set; }
 }

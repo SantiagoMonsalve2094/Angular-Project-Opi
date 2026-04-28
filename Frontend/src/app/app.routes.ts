@@ -3,15 +3,29 @@ import { Layout } from './layout/layout/layout';
 import { ContactPage } from './pages/contact/contact';
 import { HomePage } from './pages/home/home';
 import { ProjectsPage } from './pages/projects/projects';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./features/auth/components/login/login').then((m) => m.Login),
+  },
+
+  {
+    path: '',
     component: Layout,
+    canActivate: [authGuard],
 
     children: [
       {
-        path: '',
+        path: 'dashboard/:id/other',
         redirectTo: 'home',
         pathMatch: 'full',
       },
@@ -48,6 +62,6 @@ export const routes: Routes = [
 
   {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: 'login',
   },
 ];
