@@ -69,7 +69,9 @@ app.MapDelete("/expenses/delete/{id}", (int id) =>
 
 app.MapPost("/auth/login", (LoginDto loginDto) =>
 {
-    return loginDto.username == "admin" && loginDto.password == "123456"
+    var validUser = loginDto.username.StartsWith("opi", StringComparison.OrdinalIgnoreCase);
+
+    return validUser && loginDto.password == "123456"
         ? Results.Ok("Login successful")
         : Results.Unauthorized();
 }).WithName("Login");

@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LoginDto } from '../../features/auth/models/LoginDto';
 
@@ -27,25 +27,23 @@ export class AuthService {
     return this.http.post<any>(`${this.base}${this.ep.login}`, credentials);
   }
 
-  login(credentials: LoginCredentials): boolean {
-    if (credentials.username === 'admin' && credentials.password === '123456') {
-      this.loginService(credentials).subscribe({
-        next: (response) => {
-          console.log('Respuesta del servidor:', response);
-        },
-        error: (err) => {
-          console.error('Error en login', err);
-        },
-      });
+  login(credentials: LoginCredentials): Observable<boolean> {
+    return this.loginService(credentials).pipe(
+      tap((response) => {
+        console.log('Respuesta del servidor:', response);
+      }),
+      map(() => {
+        localStorage.setItem(AUTH_KEY, credentials.username);
+        this._currentUser.set(credentials.username);
+        console.log('Login correcto');
 
-      localStorage.setItem(AUTH_KEY, credentials.username);
-      this._currentUser.set(credentials.username);
-      console.log('Login correcto');
-
-      return true;
-    }
-
-    return false;
+        return true;
+      }),
+      catchError((err) => {
+        console.error('Error en login', err);
+        return of(false);
+      }),
+    );
   }
 
   logout(): void {

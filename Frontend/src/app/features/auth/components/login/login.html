@@ -35,6 +35,12 @@
               El usuario es requerido.
             } @else if (usernameControl.errors?.['minlength']) {
               Minimo 3 caracteres.
+            } @else if (usernameControl.errors?.['startsWithOpi']) {
+              El usuario debe comenzar con opi.
+            } @else if (usernameControl.errors?.['maxlength']) {
+              Maximo 20 caracteres.
+            } @else if (usernameControl.errors?.['pattern']) {
+              Solo letras y numeros.
             }
           </span>
         }
@@ -66,7 +72,8 @@
         }
       </div>
 
-      <button type="submit" class="login-button">Ingresar</button>
+      <button type="submit" class="login-button">Entrar</button>
+      <button type="button" class="login-button btn-secondary" (click)="cancel()">Cancelar</button>
     </form>
   </div>
 </main>

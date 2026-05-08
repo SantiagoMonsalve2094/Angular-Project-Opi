@@ -58,4 +58,9 @@
   color: white;
   background: #ef6c00;
   cursor: pointer;
+  margin-top: 7px;
+}
+
+.btn-secondary {
+  background: #444444;
 }

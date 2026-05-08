@@ -1,14 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Expense, ExpenseAdd as ExpenseAddModel, ExpenseCategory } from '../../models/expenseModel';
 
 @Component({
   selector: 'app-expense-add',
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './expense-add.html',
   styleUrl: './expense-add.css',
 })
 export class ExpenseAdd implements OnInit {
+
+  private fb = inject(FormBuilder);
 
   @Output() expenseAdded = new EventEmitter<ExpenseAddModel>();
 
@@ -20,12 +22,12 @@ export class ExpenseAdd implements OnInit {
 
   readonly ExpenseCategory = ExpenseCategory;
 
-  newExpense = {
-    description: '',
-    amount: 0,
-    date: '',
-    category: ExpenseCategory.Others,
-  };
+  form = this.fb.nonNullable.group({
+    description: ['', Validators.required],
+    amount: [0, [Validators.required, Validators.min(0.01)]],
+    date: ['', Validators.required],
+    category: [ExpenseCategory.Others, Validators.required],
+  });
 
 
   ngOnInit(): void {
@@ -35,12 +37,12 @@ export class ExpenseAdd implements OnInit {
       const mm = String(date.getMonth() + 1).padStart(2, '0');
       const dd = String(date.getDate()).padStart(2, '0');
 
-      this.newExpense = {
+      this.form.setValue({
         description: this.editingExpense.description,
         amount: this.editingExpense.amount,
         date: `${yyyy}-${mm}-${dd}`,
         category: this.editingExpense.category,
-      };
+      });
       return;
     }
 
@@ -48,7 +50,9 @@ export class ExpenseAdd implements OnInit {
     const yyyy = today.getFullYear();
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const dd = String(today.getDate()).padStart(2, '0');
-    this.newExpense.date = `${yyyy}-${mm}-${dd}`;
+    this.form.patchValue({
+      date: `${yyyy}-${mm}-${dd}`,
+    });
   }
 
 
@@ -58,15 +62,20 @@ export class ExpenseAdd implements OnInit {
 
 
   submit(): void {
-    if (!this.newExpense.description || !this.newExpense.amount || !this.newExpense.date) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
-    const [year, month, day] = this.newExpense.date.split('-').map(Number);
+    const newExpense = this.form.getRawValue();
+
+    const [year, month, day] = newExpense.date.split('-').map(Number);
 
     this.expenseAdded.emit({
-      description: this.newExpense.description,
-      amount: this.newExpense.amount,
+      description: newExpense.description,
+      amount: Number(newExpense.amount),
       date: new Date(year, month - 1, day),
-      category: this.newExpense.category,
+      category: newExpense.category,
     });
   }
 }

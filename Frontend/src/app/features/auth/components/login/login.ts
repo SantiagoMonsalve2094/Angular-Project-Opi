@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, ReactiveFormsModule, FormBuilder, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/auth/auth.service';
 
@@ -8,7 +8,7 @@ import { AuthService } from '../../../../core/auth/auth.service';
   imports: [ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Login {
 
@@ -16,10 +16,27 @@ export class Login {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  private startsWithOpi(control: AbstractControl): ValidationErrors | null {
+    const value: string = control.value ?? '';
+
+    return value.length > 0 && !value.toLowerCase().startsWith('opi')
+      ? { startsWithOpi: true }
+      : null;
+  }
+
   protected readonly loginError = signal(false);
 
   protected readonly form = this.fb.nonNullable.group({
-    username: ['', [Validators.required, Validators.minLength(3)]],
+    username: [
+      '',
+      [
+        Validators.required,
+        this.startsWithOpi,
+        Validators.minLength(3),
+        Validators.maxLength(20),
+        Validators.pattern(/^[a-zA-Z0-9]+$/),
+      ],
+    ],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
@@ -30,13 +47,14 @@ export class Login {
     }
 
     const { username, password } = this.form.getRawValue();
-    const success = this.authService.login({ username, password });
 
-    if (success) {
-      this.router.navigate(['/expenses']);
-    } else {
-      this.loginError.set(true);
-    }
+    this.authService.login({ username, password }).subscribe((success) => {
+      if (success) {
+        this.router.navigate(['/expenses']);
+      } else {
+        this.loginError.set(true);
+      }
+    });
   }
 
   protected get usernameControl() {
@@ -45,5 +63,9 @@ export class Login {
 
   protected get passwordControl() {
     return this.form.controls.password;
+  }
+
+  cancel(): void {
+    this.router.navigate(['/recovery-password']);
   }
 }
