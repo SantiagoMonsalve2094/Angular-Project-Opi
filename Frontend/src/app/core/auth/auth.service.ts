@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LoginDto } from '../../features/auth/models/LoginDto';
 
@@ -29,15 +29,14 @@ export class AuthService {
 
   login(credentials: LoginCredentials): Observable<boolean> {
     return this.loginService(credentials).pipe(
-      tap((response) => {
-        console.log('Respuesta del servidor:', response);
-      }),
-      map(() => {
-        localStorage.setItem(AUTH_KEY, credentials.username);
-        this._currentUser.set(credentials.username);
-        console.log('Login correcto');
+      map((response) => {
+        if (response === 'Login successful') {
+          localStorage.setItem(AUTH_KEY, credentials.username);
+          this._currentUser.set(credentials.username);
+          return true;
+        }
 
-        return true;
+        return false;
       }),
       catchError((err) => {
         console.error('Error en login', err);
